@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E2T Forum</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        html, body{
+            font-family: monospace;
+        }
+    </style>
+    <script type="text/javascript" src="/js/script.js"></script>
+</head>
+<body class="bg-slate-50" onload="load_posts()">
+    <!----Header---->
+    <%-include("../partial/header.ejs")%>
+    <div class="flex rounded-sm h-full">
+        <div class="bg-white w-3/12 p-5 mb-5">
+            <div class="flex justify-center">
+                <img src="/image/<%=avatar%>" width="150px" class="rounded-full my-10">
+            </div>
+            <h1 class="text-center text-2xl font-bold mb-8"><%=fullname%></h1>
+            <hr>
+            <div class="flex flex-col justify-center my-5">
+                <div class="bg-red-50 mx-20 p-5 rounded-md bg-gradient-to-r from-pink-200 to-orange-400 cursor-pointer my-2 hover:bg-gradient-to-r hover:from-ungumuda hover:to-birutua hover:text-white">
+                    <h1 class="text-center">Home</h1>
+                </div>
+                <div class="bg-red-50 mx-20 p-5 rounded-md bg-gradient-to-r from-pink-200 to-orange-400 cursor-pointer my-2 hover:bg-gradient-to-r hover:from-ungumuda hover:to-birutua hover:text-white">
+                    <h1 class="text-center">My Post</h1>
+                </div>
+                <div class="bg-red-50 mx-20 p-5 rounded-md bg-gradient-to-r from-pink-200 to-orange-400 cursor-pointer my-2 hover:bg-gradient-to-r hover:from-ungumuda hover:to-birutua hover:text-white">
+                    <h1 class="text-center">My Account</h1>
+                </div>
+                <div class="bg-red-50 mx-20 p-5 rounded-md bg-gradient-to-r from-pink-200 to-orange-400 cursor-pointer my-2 hover:bg-gradient-to-r hover:from-ungumuda hover:to-birutua hover:text-white">
+                    <h1 class="text-center">Settings</h1>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white w-9/12 ml-5 mb-5 p-8 rounded-md">
+            <div class="container bg-slate-100 p-5 rounded-md">
+                <h1 class="text-center text-xl font-bold mb-2">Buat Post</h1>
+                <textarea class="resize-none outline-none w-full p-3 rounded-sm" id="textpost" placeholder="Tulis ..."></textarea>
+                <p class="text-red-500" id="alert_" style="display:none">Tidak boleh kosong</p>
+                <p class="text-blue-500" id="alert_2" style="display:none">Mengirim</p>
+                <p class="text-orange-500" id="alert_3" style="display:none">Sudah Terkirim</p>
+                <div class="flex justify-end">
+                    <button class="px-4 py-2 mt-2 rounded-sm bg-gradient-to-r from-pink-200 to-orange-400 cursor-pointer hover:bg-gradient-to-r hover:from-ungumuda hover:to-birutua hover:text-white" onclick="sendpost()">Buat</button>
+                </div>
+            </div>
+            <p class="mt-10">Post Terbaru</p>
+            <div class="container" id="posts">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
