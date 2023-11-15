@@ -74,8 +74,35 @@ function findNewPost(userid, callback){
     })
 }
 
+function findLikeFromWho(postid, callback){
+    dbase.drive(async (db, client) => {
+        let collection = db.collection("like")
+        let likes = await collection.find({to: new ObjectId(postid)}).toArray()
+        client.close()
+        callback(likes)
+    })
+}
+
+function findLikeExist(userid, postid, callback){
+    dbase.drive(async (db, client) => {
+        let collection = db.collection("like")
+        let object = {userid: new ObjectId(userid), to: new ObjectId(postid)}
+        let like = await collection.find(object).toArray()
+        let exist = false
+
+        if(like.length != 0){
+            exist = true
+        }
+
+        client.close()
+        callback(exist)
+    })
+}
+
 module.exports = {
     findUserById,
     findUserByUsernameAndPassword,
-    findNewPost
+    findNewPost,
+    findLikeFromWho,
+    findLikeExist
 };

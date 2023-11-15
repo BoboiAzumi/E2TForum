@@ -1,7 +1,7 @@
 const dbase = require("./db_connect")
 
 function InsertToPost(object, callback){
-    dbase.drive(async (db) => {
+    dbase.drive(async (db, client) => {
         try{
             const collection = db.collection("post")
             await collection.insertOne(object)
@@ -10,11 +10,12 @@ function InsertToPost(object, callback){
         catch{
             callback(false)
         }
+        client.close()
     })
 }
 
 function InsertToLike(object, callback){
-    dbase.drive(async (db) => {
+    dbase.drive(async (db, client) => {
         try{
             const collection = db.collection("like")
             await collection.insertOne(object)
@@ -23,6 +24,8 @@ function InsertToLike(object, callback){
         catch{
             callback(false)
         }
+
+        client.close()
     })
 }
 

@@ -8,6 +8,9 @@ const { findUserByUsernameAndPassword } = require("./model/db_handler/db_find")
 const { get_user_info } = require("./model/modeling/get_user_info")
 const { insert_post } = require("./model/modeling/insert_post")
 const { get_new_post } = require("./model/modeling/get_new_posts")
+const { insert_like } = require("./model/modeling/insert_like")
+const { delete_like } = require("./model/modeling/delete_like")
+const { get_like_num } = require("./model/modeling/get_like")
 const app = express()
 
 app.set("view engine", "ejs")
@@ -97,6 +100,34 @@ app.get("/getnewposts/", async (req, res) => {
     let posts = await get_new_post(req.session.userid)
 
     res.end(JSON.stringify(posts))
+})
+
+app.post("/insertlike/", async (req, res) => {
+    let userid = req.session.userid
+    let postid = req.body.postid
+
+    if(await insert_like(userid, postid)){
+        let likenum = await get_like_num(postid)
+        res.end("{\"status\" : \"ok\", \"likenum\":\""+likenum+"\"}")
+    }
+    else{
+        res.end("{\"status\" : \"not ok\"}")
+    }
+    
+})
+
+app.post("/deletelike/", async (req, res) => {
+    let userid = req.session.userid
+    let postid = req.body.postid
+
+    if(await delete_like(userid, postid)){
+        let likenum = await get_like_num(postid)
+        res.end("{\"status\" : \"ok\", \"likenum\":\""+likenum+"\"}")
+    }
+    else{
+        res.end("{\"status\" : \"not ok\"}")
+    }
+    
 })
 
 app.listen(1000, () => console.log("starting"))

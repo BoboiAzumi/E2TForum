@@ -1,4 +1,5 @@
 const { findNewPost } = require("../db_handler/db_find");
+const { get_like_num, get_like_exist } = require("./get_like");
 const { get_user_info } = require("./get_user_info");
 
 async function get_new_post(userid){
@@ -8,6 +9,8 @@ async function get_new_post(userid){
                 let userinfo = await get_user_info(posts[i].userid.toString())
                 posts[i].fullname = userinfo[0].fullname
                 posts[i].avatar = userinfo[0].avatar
+                posts[i].likeNumber = await get_like_num(posts[i]._id.toString())
+                posts[i].isLike = await get_like_exist(userid, posts[i]._id.toString())
             }
             resolve(posts)
         })
