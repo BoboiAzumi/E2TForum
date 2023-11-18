@@ -99,6 +99,21 @@ function findLikeExist(userid, postid, callback){
     })
 }
 
+function findUsername(username, callback){
+    dbase.drive(async (db, client) => {
+        let collection = db.collection("user")
+        let user = await collection.find({username: username})
+        let exist = false
+
+        if(user.length != 0){
+            exist = true
+        }
+
+        client.close()
+        callback(exist)
+    })
+}
+
 module.exports = {
     findUserById,
     findUserByUsernameAndPassword,

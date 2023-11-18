@@ -24,10 +24,11 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie:{
-        maxAge: 60 * 60 * 24 * 7
+        maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }))
 
+/*
 app.use((req, res, next) => {
     if(req.session.userid === undefined && req.url != "/login/" && req.url != "/loginact/"){
         res.redirect("/login/")
@@ -36,26 +37,37 @@ app.use((req, res, next) => {
         next()
     }
 })
+*/
 
-app.use((req, res, next) => {
-    if(req.session.userid && (req.url === "/login/" || req.url === "/loginact/")){
+
+function isNotLogin(req, res, next){
+    if(req.session.userid === undefined){
+        res.redirect("/login/")
+    }
+    else{
+        next()
+    }
+}
+
+function isLogin(req, res, next){
+    if(req.session.userid){
         res.redirect("/")
     }
     else{
         next()
     }
-})
+}
 
-app.get("/", async (req, res) => {
+app.get("/", isNotLogin, async (req, res) => {
     let info = await get_user_info(req.session.userid)
     res.render("pages/index", info[0])
 })
 
-app.get("/login/", (req, res) => {
+app.get("/login/", isLogin, (req, res) => {
     res.render("pages/login.ejs");
 })
 
-app.post("/loginact/", async (req, res) => {
+app.post("/loginact/", isLogin, async (req, res) => {
     if(await login(req.body.username, req.body.password)){
         let hash = crypto.createHash("sha256")
         hash.update(req.body.password)
@@ -80,12 +92,12 @@ app.post("/loginact/", async (req, res) => {
     }
 })
 
-app.get("/logout/", (req, res) => {
+app.get("/logout/", isNotLogin, (req, res) => {
     req.session.destroy()
     res.redirect("/login/")
 })
 
-app.post("/sendpost/", async (req, res) => {
+app.post("/sendpost/", isNotLogin, async (req, res) => {
     let status = await insert_post(req.session.userid, req.body.post)
 
     if(status){
@@ -96,13 +108,13 @@ app.post("/sendpost/", async (req, res) => {
     }
 })
 
-app.get("/getnewposts/", async (req, res) => {
+app.get("/getnewposts/", isNotLogin, async (req, res) => {
     let posts = await get_new_post(req.session.userid)
 
     res.end(JSON.stringify(posts))
 })
 
-app.post("/insertlike/", async (req, res) => {
+app.post("/insertlike/", isNotLogin, async (req, res) => {
     let userid = req.session.userid
     let postid = req.body.postid
 
@@ -116,7 +128,7 @@ app.post("/insertlike/", async (req, res) => {
     
 })
 
-app.post("/deletelike/", async (req, res) => {
+app.post("/deletelike/", isNotLogin, async (req, res) => {
     let userid = req.session.userid
     let postid = req.body.postid
 
@@ -128,6 +140,14 @@ app.post("/deletelike/", async (req, res) => {
         res.end("{\"status\" : \"not ok\"}")
     }
     
+})
+
+app.get("/signup/", isLogin, async(req, res) => {
+    res.render("pages/signup.ejs");
+})
+
+app.post("/signupact/", async(req, res) => {
+    res.end("on dev")
 })
 
 app.listen(1000, () => console.log("starting"))

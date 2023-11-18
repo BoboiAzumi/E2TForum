@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup E2TForum</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/mod.css">
+</head>
+<body>
+    <div class="flex flex-col justify-center h-screen items-center">
+        <div class="container bg-white w-1/5 py-6 px-5 rounded-md">
+            <h1 class="text-center text-black text-xl my-2 font-bold">Daftar Akun</h1>
+            <form action="/signupact/" method="post">
+                <p class="mt-3 text-gray-700 text-sm">Full name</p>
+                <input type="text" class="w-full border border-gray-400 rounded-md outline-none p-3 text-xs" placeholder="Type your fullname" name="fullname" required>
+                <p class="mt-3 text-gray-700 text-sm">Job</p>
+                <input type="text" class="w-full border border-gray-400 rounded-md outline-none p-3 text-xs" placeholder="Type your job" name="job" required>
+                <p class="mt-3 text-gray-700 text-sm">Gender</p>
+                <input type="radio" name="gender" value="Laki-Laki" id="glaki-laki" required>
+                <label for="glaki-laki">Laki-Laki</label>
+                <input type="radio" name="gender" value="Perempuan" id="gperempuan" required>
+                <label for="gperempuan">Perempuan</label>
+                <p class="mt-3 text-gray-700 text-sm">Username</p>
+                <input type="text" class="w-full border border-gray-400 rounded-md outline-none p-3 text-xs" placeholder="Type your username" name="username" required>
+                <p class="mt-3 text-gray-700 text-sm">Password</p>
+                <input type="password" class="w-full border border-gray-400 rounded-md outline-none p-3 text-xs" placeholder="Type your password" name="password" required>
+                <p class="mt-3 text-gray-700 text-sm">Confirm Password</p>
+                <input type="password" class="w-full border border-gray-400 rounded-md outline-none p-3 text-xs" placeholder="Type your confirm password" name="confirmpassword" required>
+                <input type="submit" class="w-full border mt-7 border-gray-400 rounded-md outline-none p-3 text-xs cursor-pointer bg-gradient-to-r from-birutua to-ungumuda text-white" value="Daftar">
+                <a href="/login/"><p class="mb-1 mt-4 text-center text-blue-600">Kembali</p></a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

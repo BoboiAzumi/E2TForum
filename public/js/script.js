@@ -57,19 +57,19 @@ function load_posts(){
                 post[i].setAttribute("id", json[i]._id)
 
                 let link = document.createElement("div")
-                link.setAttribute("class", "flex items-center")
+                link.setAttribute("class", "flex items-center mt-2")
 
                 let img = document.createElement("img")
                 img.setAttribute("src", `/image/${json[i].avatar}`)
                 img.setAttribute("width", "30px")
                 img.setAttribute("height", "30px")
                 img.setAttribute("class", "mx-2 rounded-full")
-                img.setAttribute("style", "margin-right:0.75rem")
+                img.setAttribute("style", "margin-right:0.5rem")
 
                 let linkprofile = document.createElement("a")
                 linkprofile.setAttribute("href", `/user/${json[i].userid}`)
                 linkprofile.setAttribute("target", "blank")
-                linkprofile.setAttribute("class", "pl-4")
+                linkprofile.setAttribute("class", "pl-2 ")
 
                 let profilename = document.createElement("h1")
                 profilename.setAttribute("class", "text-xl font-bold")
@@ -83,7 +83,7 @@ function load_posts(){
                 post[i].appendChild(link)
 
                 let content = document.createElement("div")
-                content.setAttribute("class", "container w-full mx-3 mt-5")
+                content.setAttribute("class", "container w-full mx-2 mt-5")
                 content.innerHTML = `${json[i].post}`
 
                 post[i].appendChild(content)
