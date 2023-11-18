@@ -28,18 +28,6 @@ app.use(session({
     }
 }))
 
-/*
-app.use((req, res, next) => {
-    if(req.session.userid === undefined && req.url != "/login/" && req.url != "/loginact/"){
-        res.redirect("/login/")
-    }
-    else{
-        next()
-    }
-})
-*/
-
-
 function isNotLogin(req, res, next){
     if(req.session.userid === undefined){
         res.redirect("/login/")
