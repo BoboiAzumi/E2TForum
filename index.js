@@ -11,6 +11,7 @@ const { get_new_post } = require("./model/modeling/get_new_posts")
 const { insert_like } = require("./model/modeling/insert_like")
 const { delete_like } = require("./model/modeling/delete_like")
 const { get_like_num } = require("./model/modeling/get_like")
+const { signup } = require("./model/modeling/signup")
 const app = express()
 
 app.set("view engine", "ejs")
@@ -131,11 +132,62 @@ app.post("/deletelike/", isNotLogin, async (req, res) => {
 })
 
 app.get("/signup/", isLogin, async(req, res) => {
-    res.render("pages/signup.ejs");
+    let param = req.query
+    let error = {
+        u_exist : false,
+        p_not_match : false
+    }
+    if(param.error){
+        if(param.error == "1"){
+            error.u_exist = true
+            res.render("pages/signup.ejs", error)
+        }
+        else{
+            error.p_not_match = true
+            res.render("pages/signup.ejs", error)
+        }
+    }
+    else{
+        console.log(param)
+        res.render("pages/signup.ejs", error);
+    }
 })
 
 app.post("/signupact/", async(req, res) => {
-    res.end("on dev")
+    let postdata = req.body
+
+    if(postdata.password != postdata.confirmpassword){
+        res.redirect("/signup/?error=2")
+    }
+    else{
+        let signupact = await signup(postdata)
+        if(signupact){
+            res.redirect("/login/?signup=ok")
+        }
+        else{
+            res.redirect("/signup/?error=1")
+        }
+    }
+})
+
+app.get("/signupact/", (req, res) => {
+    res.redirect("/signup/")
+})
+
+app.get("/mypost/", (req, res) => {
+    res.end("On Dev")
+})
+
+app.get("/user/:id", (req, res) => {
+    res.end("On Dev")
+})
+
+app.get("/post/:id", (req, res) => {
+    res.end("On Dev")
+})
+
+app.get("/settings/", (req, res) => {
+    res.end("On Dev")
 })
 
 app.listen(1000, () => console.log("starting"))

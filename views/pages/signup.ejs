@@ -23,10 +23,16 @@
                 <label for="gperempuan">Perempuan</label>
                 <p class="mt-3 text-gray-700 text-sm">Username</p>
                 <input type="text" class="w-full border border-gray-400 rounded-md outline-none p-3 text-xs" placeholder="Type your username" name="username" required>
+                <% if(u_exist) {%>
+                <p class="mt-3 text-red-700 text-sm">Username Telah Terdaftar</p>
+                <%}%>
                 <p class="mt-3 text-gray-700 text-sm">Password</p>
                 <input type="password" class="w-full border border-gray-400 rounded-md outline-none p-3 text-xs" placeholder="Type your password" name="password" required>
                 <p class="mt-3 text-gray-700 text-sm">Confirm Password</p>
                 <input type="password" class="w-full border border-gray-400 rounded-md outline-none p-3 text-xs" placeholder="Type your confirm password" name="confirmpassword" required>
+                <% if(p_not_match) {%>
+                <p class="mt-3 text-red-700 text-sm">Password tidak sama</p>
+                <%}%>
                 <input type="submit" class="w-full border mt-7 border-gray-400 rounded-md outline-none p-3 text-xs cursor-pointer bg-gradient-to-r from-birutua to-ungumuda text-white" value="Daftar">
                 <a href="/login/"><p class="mb-1 mt-4 text-center text-blue-600">Kembali</p></a>
             </form>

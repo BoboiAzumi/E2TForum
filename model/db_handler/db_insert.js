@@ -29,7 +29,22 @@ function InsertToLike(object, callback){
     })
 }
 
+function InsertToUser(object, callback){
+    dbase.drive(async (db, client) => {
+        try{
+            const collection = db.collection("user")
+            await collection.insertOne(object)
+            callback(true)
+        }
+        catch{
+            callback(false)
+        }
+        client.close()
+    })
+}
+
 module.exports ={
     InsertToPost,
-    InsertToLike
+    InsertToLike,
+    InsertToUser
 }

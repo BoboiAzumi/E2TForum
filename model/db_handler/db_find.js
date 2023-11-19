@@ -102,7 +102,7 @@ function findLikeExist(userid, postid, callback){
 function findUsername(username, callback){
     dbase.drive(async (db, client) => {
         let collection = db.collection("user")
-        let user = await collection.find({username: username})
+        let user = await collection.find({username: username}).toArray()
         let exist = false
 
         if(user.length != 0){
@@ -119,5 +119,6 @@ module.exports = {
     findUserByUsernameAndPassword,
     findNewPost,
     findLikeFromWho,
-    findLikeExist
+    findLikeExist,
+    findUsername
 };
